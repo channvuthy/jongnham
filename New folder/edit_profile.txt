@@ -1,0 +1,68 @@
+<h3>Edit Profile</h3>
+            <form action="{{route('postUserUpdateProfile')}}" method="post">
+               <input type="hidden" name="_token" value="{{Session::token()}}">
+               <input type="hidden" name="id" value="{{Auth::user()->id}}">
+               <div class="form-group">
+                  <label for="">Username</label>
+                  <input type="text" name="username" id="" class="form-control" value="{{(Auth::user())?Auth::user()->username:''}}">
+               </div>
+               <div class="form-group">
+                  <label for="">Email</label>
+                  <input type="text" name="email" id="email" class="form-control" value="{{(Auth::user())?Auth::user()->email:''}}">
+               </div>
+               <div class="form-group">
+                  <label for="">Password</label>
+                  <input type="password" name="password" id="password" class="form-control" required>
+               </div>
+               <div class="form-group">
+                  <label for="">Sex</label>
+                  <select name="sex" id="sex" class="form-control" >
+                  <option value="Male" {{(Auth::user()->sex=='Male')?'selected':''}}>Male</option>
+                  <option value="Female" {{(Auth::user()->sex=='Female')?'selected':''}}>Female</option>
+                  </select>
+               </div>
+               <div class="form-group">
+                  <label for="">Phone</label>
+                  <input type="text" name="phone" id="phone" class="form-control" value="{{(Auth::user())?Auth::user()->phone:''}}">
+               </div>
+               <div class="form-group">
+                  <label for="">Date Of Brith</label>
+                  <input type="date" name="dob" id="dob" class="form-control" value="{{(Auth::user())?Auth::user()->date_of_birth:''}}">
+               </div>
+               <div class="form-group">
+                  <label for="">Address</label>
+                  <textarea name="address" id="address" cols="30" rows="5" class="form-control">{{(Auth::user())?Auth::user()->address:''}}</textarea>
+               </div>
+               <div class="form-group">
+                  <button class="btn btn-info __clear__border">Update Profile</button>
+               </div>
+            </form>
+            <?php elseif(isset($_GET['list-store'])):?>
+            <div class="panel panel-primary">
+               <div class="panel-heading">
+                  <h4>
+                     <div class="fa fa-user"> </div>
+                     Page Managment
+                  </h4>
+               </div>
+               <div class="panel-body">
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th>Page Name</th>
+                           <th>Status</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach($singularUser->stores as $store)
+                        <tr>
+                           <td>@if($store->approval!="1") <a href="#">{{$store->name}}</a> @else<a href="{{route('getEditStore',array('id'=>bcrypt($store->id).'keystore'.$store->id,'key'=>bcrypt($singularUser->id).'authentication'.$singularUser->id))}}">{{$store->name}}</a>@endif</td>
+                           <td>@if($store->approval!="1") Page not yet activated @else Activated @endif</td>
+                           <td>@if($store->approval!="1") @else<a href="{{route('postAddManageUserPage',array('store_id'=>$store->id,'keygerate'=>bcrypt($store->id),'owner_page'=>$singularUser->id))}}" style="text-decoration:none;"><i class="fa fa-cog"></i> Manage</a>@endif</td>
+                        </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               </div>
+            </div>

@@ -1,0 +1,257 @@
+       {{--  <form class="form-horizontal __form__user" style="font-size:12px;" action="{{route('postSaveRestaurant')}}" method="post" enctype="multipart/form-data" id="__form__user">
+               <div class="col-md-6 __clear__padding">
+                  {{ csrf_field() }}
+                  <div class="form-group">
+                     <h3 style="margin-left:12px;">General Information</h3>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-4">Strore Name*</label>
+                     <div class="col-sm-8">
+                        <input type="text" class="form-control" name="name" id="name" required>
+                     </div>
+                  </div>
+                  <div class="form-group" onclick="myDropZone();">
+                     <label for="inputEmail3" class="col-sm-4">Chose File</label>
+                     <div class="col-sm-8">
+                        <div class="form-control">
+                           <img src="{{asset('uploads/1478868224_instagram_online_social_media.png')}}" alt="">
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-12" style="border:1px solid #ccc;">
+                     <div class="box__image form-group">
+                        @for($i=0;$i<3;$i++)
+                        <div class="thumbnail" style="width:112px;height:100px;border:1px solid #ccc;float:left;margin:12px;box-sizing:border-box;"></div>
+                        @endfor
+                     </div>
+                  </div>
+                  <div class="clearfix" style="margin-bottom:20px;"></div>
+                  <div class="form-group">
+                     <label for="inputPassword3" class="col-sm-4 ">Businnese hour*</label>
+                     <div class="col-sm-8">
+                        <div class="row __clear__margin">
+                           <div class="col-md-12 __clear__padding">
+                              <label for="inputPassword3" class="col-sm-4 __clear__margin __clear__padding"> From</label>
+                              <div class="col-sm-8 __clear__padding">
+                                 <input type="time" class="form-control" id="from" name="from" required  placeholder="7:00 AM">
+                              </div>
+                           </div>
+                           <div class="clearfix" style="margin-bottom: 20px;"></div>
+                           <div class="col-md-12 __clear__padding">
+                              <label for="inputPassword3" class="col-sm-4 __clear__padding">&nbsp; To</label>
+                              <div class="col-sm-8 __clear__padding">
+                                 <input type="time" class="form-control" id="to" name="to" required placeholder="5:00 PM">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-4">Email</label>
+                     <div class="col-sm-8">
+                        <input type="text" class="form-control" id="email" name="email" required>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-4">Address*</label>
+                     <div class="col-sm-8">
+                        <input type="text" class="form-control" id="address" name="address" required>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-4">Phone Number*</label>
+                     <div class="col-sm-8">
+                        <input type="text" class="form-control" id="phone" name="phone" required>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-4">Website</label>
+                     <div class="col-sm-8">
+                        <input type="text" class="form-control" id="website" name="website" >
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-12">Google map</label>
+                     <div class="col-sm-12 col-md-12">
+                        <style>
+                           html, body {
+                           height: 100%;
+                           margin: 0;
+                           padding: 0;
+                           }
+                           #map {
+                           max-width:100%;
+                           height: 400px;
+                           }
+                           #searchInput {
+                           background-color: #fff;
+                           font-family: Roboto;
+                           font-size: 15px;
+                           font-weight: 300;
+                           margin-left: 12px;
+                           padding: 0 11px 0 13px;
+                           text-overflow: ellipsis;
+                           width: 50%;
+                           }
+                           #searchInput:focus {
+                           border-color: #4d90fe;
+                           }
+                        </style>
+                        </head>
+                        <body>
+                           <input id="searchInput" class="controls" type="text" placeholder="Enter a location">
+                           <div id="map"></div>
+                           <ul id="geoData">
+                              <input type="hidden" id="location" name="maplocation" >
+                              <input type="hidden" id="postal_code" name="mappostal_code">
+                              <input type="hidden" id="country" name="mapcountry">
+                              <input type="hidden" id="lat" name="maplat">
+                              <input type="hidden" id="lon" name="maplon">
+                           </ul>
+                           <script>
+                              function initMap() {
+                                  var map = new google.maps.Map(document.getElementById('map'), {
+                                    center: {lat: -33.8688, lng: 151.2195},
+                                    zoom: 13
+                                  });
+                                  var input = document.getElementById('searchInput');
+                                  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+                              
+                                  var autocomplete = new google.maps.places.Autocomplete(input);
+                                  autocomplete.bindTo('bounds', map);
+                              
+                                  var infowindow = new google.maps.InfoWindow();
+                                  var marker = new google.maps.Marker({
+                                      map: map,
+                                      position:{lat: -33.8688, lng: 151.2195},
+                                      anchorPoint: new google.maps.Point(0, -29)
+                                  });
+                              
+                                  autocomplete.addListener('place_changed', function() {
+                                      infowindow.close();
+                                      marker.setVisible(false);
+                                      var place = autocomplete.getPlace();
+                                      if (!place.geometry) {
+                                          window.alert("Autocomplete's returned place contains no geometry");
+                                          return;
+                                      }
+                                
+                                      // If the place has a geometry, then present it on a map.
+                                      if (place.geometry.viewport) {
+                                          map.fitBounds(place.geometry.viewport);
+                                      } else {
+                                          map.setCenter(place.geometry.location);
+                                          map.setZoom(17);
+                                      }
+                                      marker.setIcon(({
+                                          url: place.icon,
+                                          size: new google.maps.Size(71, 71),
+                                          origin: new google.maps.Point(0, 0),
+                                          anchor: new google.maps.Point(17, 34),
+                                          scaledSize: new google.maps.Size(35, 35)
+                                      }));
+                                      marker.setPosition(place.geometry.location);
+                                      marker.setVisible(true);
+                                  
+                                      var address = '';
+                                      if (place.address_components) {
+                                          address = [
+                                            (place.address_components[0] && place.address_components[0].short_name || ''),
+                                            (place.address_components[1] && place.address_components[1].short_name || ''),
+                                            (place.address_components[2] && place.address_components[2].short_name || '')
+                                          ].join(' ');
+                                      }
+                                  
+                                      infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+                                      infowindow.open(map, marker);
+                                    
+                                      //Location details
+                                      for (var i = 0; i < place.address_components.length; i++) {
+                                          if(place.address_components[i].types[0] == 'postal_code'){
+                                              document.getElementById('postal_code').value = place.address_components[i].long_name;
+                                          }
+                                          if(place.address_components[i].types[0] == 'country'){
+                                              document.getElementById('country').value = place.address_components[i].long_name;
+                                          }
+                                      }
+                                      document.getElementById('location').value = place.formatted_address;
+                                      document.getElementById('lat').value = place.geometry.location.lat();
+                                      document.getElementById('lon').value = place.geometry.location.lng();
+                                  });
+                                  google.maps.event.addListener(map, 'click', function (e) {
+                                      document.getElementById('lat').value = e.latLng.lat();
+                                      document.getElementById('lon').value = e.latLng.lng();
+                                      var marker = new google.maps.Marker({
+                                        map: map,
+                                        draggable: true,
+                                        animation: google.maps.Animation.DROP,
+                                        position:{lat:e.latLng.lat(), lng: e.latLng.lng() },
+                                        anchorPoint: new google.maps.Point(0, -29)
+                                      });   
+                                 });
+                              }
+                           </script>
+                           <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDre1VDn9vLz8GPlSODwfPNGeYKoRpCpbw&callback=initMap" async defer></script>
+                        </body>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-12">About</label>
+                     <div class="col-sm-12 col-md-12">
+                        <textarea name="about" id="about" cols="30" rows="7"  class="form-control textarea" name="about"></textarea>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                  </div>
+               </div>
+               <div class="col-sm-6 ">
+                  <div class="form-group">
+                     <h3 style="margin-left:12px;">Search Filter Information</h3>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-4">Type of Food*</label>
+                     <?php $Typeoffoods=\App\Models\Typeoffood::all();?>
+                     <div class="col-sm-8">
+                        <select name="typeoffood[]" id="typeoffood" class="js-example-basic-multiple form-control __clear__border" multiple="multiple">
+                           @foreach($Typeoffoods as $Typeoffood)
+                           <option value="{{$Typeoffood->id}}">{{$Typeoffood->name}}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputEmail3" class="col-sm-4">Type of Place*</label>
+                     <?php $Typeofplaces=\App\Models\Typeofplace::all();?>
+                     <div class="col-sm-8">
+                        <select name="typeofplace" id="typeofplace" class="form-control" name="foodplace">
+                           @foreach($Typeofplaces as $Typeofplace)
+                           <option value="{{$Typeofplace->id}}">{{$Typeofplace->placename}}</option>
+                           @endforeach
+                        </select>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     <label for="inputPassword3" class="col-sm-4 ">Average Price*</label>
+                     <div class="col-sm-8">
+                        <div class="row __clear__margin">
+                           <div class="col-md-4 __clear__padding">
+                              <div class="col-sm-12 __clear__padding">
+                                 <input type="text" class="form-control" id="pricefrom" name="pricefrom">
+                              </div>
+                           </div>
+                           <div class="col-md-8 __clear__padding">
+                              <label for="inputPassword3" class="col-sm-4 col-offset-1__clear__padding">&nbsp; To</label>
+                              <div class="col-sm-6 col-sm-offset-2 __clear__padding">
+                                 <input type="text" class="form-control" id="priceto" name="priceto">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="form-group">
+                  <div class="col-sm-12">
+                     <button type="submit" class="btn btn-danger __clear__border">Save</button>
+                  </div>
+               </div>
+            </form> --}}

@@ -1,0 +1,122 @@
+<div class="form-group">
+               <input type="text" name="" id="emailorname" class="form-control" placeholder="Type a name or Email to manag your page">
+               <input type="hidden" name="store" value="{{$_GET['store_id']}}" id="store_id">
+               <span class="text-danger status" id="status"></span>
+            </div>
+            <div class="form-group">
+               <button type="submit" class="btn btn-primary btn-xs save">Save</button>
+            </div>
+            <hr>
+            <div class="panel panel-primary">
+               <div class="panel-heading">
+                  <h4>
+                     <div class="fa fa-user"> </div>
+                     Mange User
+                  </h4>
+               </div>
+               <div class="panel-body">
+                  <?php $store=\App\Models\Store::find($_GET['store_id']);?>
+                  @foreach($store->users as $user)
+                  <div class="form-group">
+                     @if($user->id !=$_GET['owner_page'])
+                     <p>{{$user->email}}</p>
+                     <button class="remove btn btn-primary btn-xs removeUser" data="{{$user->id}}">Remove User</button>
+                     <input type="hidden" name="" class="storeID" value="{{$_GET['store_id']}}">
+                     @endif
+                  </div>
+                  @endforeach
+               </div>
+            </div>
+            <div class="panel panel-primary">
+               <div class="panel-heading">
+                  <h4>
+                     <div class="fa fa-tags"> </div>
+                     Food Menus
+                  </h4>
+               </div>
+               <div class="panel-body">
+                  <table class="table table-hover">
+                     <thead>
+                        <tr>
+                           <th>Post Name</th>
+                           <th>Image</th>
+                           <th>Price</th>
+                           <th>Created_at</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach($store->menufoods as $food)
+                        <tr>
+                           <td>{{$food->name}}</td>
+                           <td><img src="{{asset('uploads')}}/{{$food->image}}" width="50" alt="" class="previewImage"></td>
+                           <td>${{$food->price}}</td>
+                           <td>{{$food->created_at}}</td>
+                           <input type="hidden" name="" value="{{$food->id}}" id="pid">
+                           <input type="hidden" name="" value="{{$food->name}}" id="pname">
+                           <input type="hidden" name="" value="{{$food->price}}" id="pprice">
+                           <input type="hidden" name="" value="{{$food->image}}" id="pimage">
+                           <input type="hidden" name="" value="{{$food->description}}" id="pdescription">
+                           <td><a href="#" class="btn btn-info btn-xs editPostFood" >Edit</a> <a href="#" class="btn btn-danger btn-xs deletPostFood">Delete</a></td>
+                        </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <script type="text/javascript">
+               $("#emailorname").keyup(function(){
+                   var emailorname=$("#emailorname").val();
+                   var store_id=$("#store_id").val();
+                   jQuery.ajax({
+                     url:"{{route('getCheckExistUsrnameOrEmail')}}",
+                     type:"GET",
+                     data:{emailorname:emailorname,store_id:store_id},
+                     success:function(data){
+                      $("#status").text("");
+                     },
+                     error:function(data){
+                       $("#status").text("User not found!");
+                     }
+                   });
+               })
+               $(".save").click(function(e){
+                   e.preventDefault();
+                   var emailorname=$("#emailorname").val();
+                   var store_id=$("#store_id").val();
+                   if(emailorname==""){
+                     alert("Please Name or Email Address User");
+                   }
+                   jQuery.ajax({
+                     url:"{{route('getSaveUserManagmentPage')}}",
+                     type:"GET",
+                     data:{emailorname:emailorname,store_id:store_id},
+                     success:function(data){
+                       alert("User has been added to page");
+                       window.location.reload();
+                       $("#emailorname").val("");
+                     },
+                     error:function(data){
+                         alert("Erro");
+                     }
+                   });
+               });
+               $(".removeUser").click(function(){
+                   var userID=$(this).attr('data');
+                   var storeID=$(".storeID").val();
+                   jQuery.ajax({
+                     url:"{{route('getRemoveUserFromPage')}}",
+                     type:"GET",
+                     data:{userID:userID,storeID:storeID},
+                     success:function(data){
+                       console.log(data);
+                       window.location.reload();
+                     },
+                     error:function(data){
+                       console.log(data);
+                     }
+               
+                   });
+               
+               });
+            </script>

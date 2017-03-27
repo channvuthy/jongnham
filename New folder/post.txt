@@ -1,0 +1,41 @@
+ <form action="{{route('postSaveFood')}}" id="__posts" method="post" enctype="multipart/form-data">
+               <h3><i class="glyphicon glyphicon-apple"></i>Post to Page</h3>
+               <hr>
+               <b>Select Page</b>
+               <h2></h2>
+               <?php $user=\App\Models\User::find(Auth::user()->id);?>
+               <div class="form-group">
+                  <select name="selectpage" id="" class="form-control">
+                     @foreach($user->stores as $store)
+                     @if($store->approval=="1")
+                     <option value="{{$store->id}}">{{$store->name}}</option>
+                     @endif
+                     @endforeach
+                  </select>
+               </div>
+               <div class="panel panel-primary">
+                  <div class="panel-heading"> Add Food to Resturant </div>
+                  <div class="panel-body">
+                     <div class="form-group" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="_token" value="{{Session::token()}}">
+                        <label for="">Food Name</label>
+                        <input type="text" name="name" id="name" class="form-control" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="">Image</label>
+                        <input type="file" name="photo" id="file" class="form-control" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="">Price</label>
+                        <input type="text" name="price" id="price" class="form-control" required>
+                     </div>
+                     <div class="form-group">
+                        <label for="">Description</label>
+                        <textarea name="description" id="description" cols="30" rows="7" class="form-control" required></textarea>
+                     </div>
+                     <div class="form-group">
+                        <button type="submit" class="btn btn-primary" id="__post__btn">Save Food</button>
+                     </div>
+                  </div>
+               </div>
+            </form>

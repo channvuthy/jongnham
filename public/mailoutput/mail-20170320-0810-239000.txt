@@ -1,0 +1,22 @@
+To: moeun.djtv1@gmail.com
+Subject: Confirmation Email
+MIME-Version: 1.0
+Content-type:text/html;charset=UTF-8
+From: <info@jongnhams.com>
+
+
+      <html>
+      <head>
+      <title>Jongnhams.com-Please Confirmation Email!</title>
+      </head>
+      <body>
+      <p>Welcome to Jongnhams - the best website where you can find awesome restaurants in Phnom Penh.</p>
+      <p>To activate your account, please
+      <a href='http://jongnhams.com/user/confirm/email/key/$2y$10$CCQtnoyXiaVILquAXLizeO6Mc6183WkcVuaHuc7AFpJEHDy6jnhgW'>Click Here</a></p>
+      <br/>
+      Please visit us by our website www.jongnhams.com 
+      <br/>
+      or our Facebook Page www.facebook.com/jongnhams
+      </body>
+      </html>
+      
